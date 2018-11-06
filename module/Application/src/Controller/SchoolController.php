@@ -15,9 +15,12 @@ class SchoolController extends BaseController
 {
     public function indexAction()
     {
-        $sql = 'SELECT * FROM semester ORDER BY year desc , semester desc ';
+        // 取得 PDO 物件
         $pdo = $this->getServiceManager()->get(PdoDb::class);
 
+        $sql = 'SELECT * FROM semester ORDER BY year desc , semester desc ';
+
+        // 取得 SemesterData Api Service
         $semesterData = $pdo->query($sql)->fetchAll(\PDO::FETCH_ASSOC);
 
         $classData = null;
@@ -33,15 +36,12 @@ class SchoolController extends BaseController
 
         return $viewModel;
 
-
-//        if (isset($_POST['semester_id'])){
-//            $sql = "SELECT * FROM semester_class WHERE semester_id=".$_POST['semester_id'];
-//            $classData = $mysqlPdo->query($sql)->fetchAll(\PDO::FETCH_ASSOC);
-//        }
-
     }
 
-
+    /**
+     * 取出學期學生資料
+     * @return ViewModel
+     */
     public function classAction()
     {
         $id = (int) $this->params()->fromQuery('id');

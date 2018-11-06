@@ -10,6 +10,11 @@ namespace Application\Service;
 use Interop\Container\ContainerInterface;
 use Zend\ServiceManager\Factory\FactoryInterface;
 
+/**
+ * 資料庫連線 PDO 物件
+ * Class PdoDb
+ * @package Application\Service
+ */
 class PdoDb implements FactoryInterface
 {
 

@@ -10,6 +10,12 @@ namespace Application\Service;
 use Interop\Container\ContainerInterface;
 use Zend\ServiceManager\Factory\FactoryInterface;
 
+/**
+ * 同步學期資料
+ * Class SemesterData
+ * @package Application\Service
+ */
+
 class SemesterData implements FactoryInterface
 {
 

@@ -15,6 +15,10 @@ use Application\Controller\BaseController;
 use Interop\Container\ContainerInterface;
 use Zend\ServiceManager\Factory\FactoryInterface;
 
+/**
+ * Class ControllerFactory
+ * @package Application\Controller\Factory
+ */
 class ControllerFactory implements FactoryInterface
 {
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)

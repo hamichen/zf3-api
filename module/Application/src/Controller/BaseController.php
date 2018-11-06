@@ -6,6 +6,11 @@ namespace Application\Controller;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\ServiceManager\ServiceManager;
 
+/**
+ * 共用 controller
+ * Class BaseController
+ * @package Application\Controller
+ */
 class BaseController extends AbstractActionController
 {
 
@@ -16,11 +21,6 @@ class BaseController extends AbstractActionController
         $this->sm = $container;
     }
 
-//    /**
-//     * @var ServiceManager
-//     */
-//    protected $serviceManager;
-//
     /**
      * @return ServiceManager
      */
@@ -28,16 +28,7 @@ class BaseController extends AbstractActionController
     {
         return $this->sm;
     }
-//
-//    /**
-//     * @param mixed $serviceManager
-//     * @return $this
-//     */
-//    public function setServiceManager($serviceManager)
-//    {
-//        $this->serviceManager = $serviceManager;
-//        return $this;
-//    }
+
 
 
 }
