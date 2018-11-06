@@ -1,0 +1,9 @@
+{% extends 'layout/layout.twig' %}
+
+{% block content %}
+    <ul>
+    {% for v in data %}
+        <li>{{ v.name }}</li>
+    {% endfor %}
+    </ul>
+{% endblock content %}

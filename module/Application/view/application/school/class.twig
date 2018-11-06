@@ -1,0 +1,21 @@
+<table class="table table-hover">
+    <thead>
+    <tr>
+        <th>座號</th>
+        <th>姓名</th>
+        <th>性別</th>
+        <th>操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for v in data %}
+        <tr>
+            <td>{{ v.number }}</td>
+            <td>{{ v.name }}</td>
+            <td>{{ v.sex }}</td>
+            <td><span class="btn btn-warning edit-btn" data-id="{{ v.student_id }}" data-name="{{ v.name }}">修改</span></td>
+        </tr>
+    {% endfor %}
+
+    </tbody>
+</table>

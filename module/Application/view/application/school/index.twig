@@ -1,0 +1,85 @@
+{% extends 'layout/layout.twig' %}
+
+{% block content %}
+    <form id="myform" method="post">
+
+        <select name="semester_id" id="semster_id">
+            <option value="">請選擇學期</option>
+            {% for v in semester %}
+                <option value="{{ v.id }}">{{ v.year }}學年第{{ v.semester }}學期</option>
+            {% endfor %}
+        </select>
+
+        {% if class %}
+
+            <select name="class_id" id="class_id">
+                <option value="">班級</option>
+                {% for v in class %}
+                    <option value="{{ v.id }}">{{ v.grade }}年{{ v.class_name }}班 {{ v.tutor }}</option>
+                {% endfor %}
+            </select>
+
+        {% endif %}
+
+    </form>
+
+    <div id="data-list">
+
+    </div>
+{% endblock %}
+
+{% block style %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.css">
+{% endblock style %}
+
+{% block inline %}
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.js"></script>
+    <script>
+
+        $(function () {
+
+            $("#semster_id").change(function () {
+                console.log($(this).val());
+
+                if ($(this).val() == '')
+                    return;
+
+                $("#myform").submit();
+
+            });
+
+            $("#class_id").change(function () {
+
+                var class_id = $(this).val();
+
+                if (class_id == '')
+                    return;
+
+                $.get("/school/class", {id:class_id}, function (html) {
+
+                    $("#data-list").html(html);
+                });
+
+            });
+
+            $("#data-list").on('click', '.edit-btn', function () {
+                var id = $(this).data('id');
+                var name = $(this).data('name');
+                $.get('t5-ajax-2.php', {id:id}, function (html) {
+                    $.alert({
+                        title: '修改'+name,
+                        content: html,
+                    });
+                })
+
+            })
+            // $(".edit-btn").click(function () {
+            //
+            // });
+
+        });
+
+    </script>
+
+{% endblock inline %}

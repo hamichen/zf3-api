@@ -1,0 +1,12 @@
+{% extends 'layout/layout.twig' %}
+
+{% block content %}
+    <h1>HELP</h1>
+    <ul>
+        {% for i,v in data %}
+            <li>{{ i }} -- {{ v }}</li>
+        {% endfor %}
+
+    </ul>
+{% endblock content %}
+
