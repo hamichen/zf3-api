@@ -8,6 +8,8 @@
 namespace Application\Controller;
 
 use Application\Service\PdoDb;
+use Zend\Form\Element\Select;
+use Zend\Form\Form;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 
@@ -23,10 +25,45 @@ class SchoolController extends BaseController
         // 取得 SemesterData Api Service
         $semesterData = $pdo->query($sql)->fetchAll(\PDO::FETCH_ASSOC);
 
+        $arr = [];
+        foreach ($semesterData as $val) {
+            $arr[$val['id']] = $val['year'].'學年'.$val['semester'].'學期';
+        }
+
+        $form = new Form('select_form');
+        $form->add([
+            'type' => Select::class,
+            'name' => 'semester_id',
+            'options' =>[
+                'label' =>'請選擇',
+                'value_options' => $arr
+            ],
+            'attributes' =>[
+                'value' =>1
+            ]
+        ]);
+        $form->add([
+            'type' => Select::class,
+            'name' => 'class_id',
+            'options' =>[
+                'label' =>'請選擇',
+
+            ],
+            'attributes' =>[
+                'value' =>1
+            ]
+        ]);
+
+//        <label> 學期<input type="text" name='semester' value=""></label>
         $classData = null;
         if ($this->params()->fromPost('semester_id')) {
             $sql = "SELECT * FROM semester_class WHERE semester_id=".$_POST['semester_id'];
             $classData = $pdo->query($sql)->fetchAll(\PDO::FETCH_ASSOC);
+            $arr = [];
+            foreach ($classData as $val) {
+                $arr[$val['id']] = $val['grade'].'年級'.$val['class_name'].'班';
+            }
+            $form->get('class_id')->setValueOptions($arr);
         }
 
         $viewModel = new ViewModel();
@@ -34,6 +71,7 @@ class SchoolController extends BaseController
         $viewModel->setVariable('semester', $semesterData);
         $viewModel->setVariable('class', $classData);
 
+        $viewModel->setVariable('form', $form);
         return $viewModel;
 
     }
