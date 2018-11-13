@@ -8,6 +8,7 @@
 namespace Application\Controller;
 
 use Application\Service\PdoDb;
+use Application\Service\PdoTest;
 use Application\TcApi\SemesterData;
 use Application\TcApi\TcApi;
 use Zend\Mvc\Controller\AbstractActionController;
@@ -89,5 +90,20 @@ class IndexController extends BaseController
         echo "abc: ". $abc;
 
         print_r($this->params()->fromQuery());
+    }
+
+
+    public function showUsersAction()
+    {
+        //$verbose = $this->request->getParam('verbose') ;
+        $classId = $this->params()->fromRoute('class_id');
+
+        $sql = "select * from semester_class where grade = $classId";
+        echo $sql;
+        $pdo = $this->sm->get(PdoTest::class);
+        $arr = $pdo->query($sql)->fetchAll();
+
+        print_r($arr);
+
     }
 }

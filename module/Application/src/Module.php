@@ -7,6 +7,10 @@
 
 namespace Application;
 
+use Zend\Mvc\Console\Service\ConsoleAdapterFactory;
+use Zend\Mvc\MvcEvent;
+use Zend\Console\Adapter\AdapterInterface as ConsoleAdapterInterface;
+
 class Module
 {
     const VERSION = '3.0.3-dev';
@@ -14,5 +18,14 @@ class Module
     public function getConfig()
     {
         return include __DIR__ . '/../config/module.config.php';
+    }
+
+    public function getConsoleUsage(ConsoleAdapterInterface $console)
+    {
+        return array(
+            'show <class_id>'    => 'show a class',
+            array('class_id', 'class id'),
+
+        );
     }
 }

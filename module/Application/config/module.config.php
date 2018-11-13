@@ -9,6 +9,7 @@ namespace Application;
 
 use Application\Controller\Factory\ControllerFactory;
 use Application\Service\PdoDb;
+use Application\Service\PdoTest;
 use Application\Service\SemesterData;
 use Zend\Router\Http\Literal;
 use Zend\Router\Http\Segment;
@@ -71,24 +72,46 @@ return [
                     ],
                 ],
             ],
+            'test' => [
+                'type'    => Segment::class,
+                'options' => [
+                    'route'    => '/test[/:action]',
+                    'defaults' => [
+                        'controller' => Controller\TestController::class,
+                        'action'     => 'index',
+                    ],
+                ],
+            ],
         ],
     ],
     'controllers' => [
         'factories' => [
             Controller\IndexController::class => ControllerFactory::class,
             Controller\SchoolController::class => ControllerFactory::class,
+            Controller\TestController::class => ControllerFactory::class,
         ],
     ],
 
     'service_manager' => [
         'factories' => [
             PdoDb::class => PdoDb::class,
-            SemesterData::class => SemesterData::class
+            SemesterData::class => SemesterData::class,
+            PdoTest::class => PdoTest::class
         ],
         'aliases' => [
             'pdodb' => PdoDb::class,
             'semester_data' => SemesterData::class,
         ]
+    ],
+
+    'translator' => [
+        'locale' => 'zh_TW',
+        'translation_files' => array(
+            array(
+                'type'      => 'phparray',
+                'filename'  => __DIR__ . '/../languages/zh_TW/Zend_Validate.php',
+            ),
+        ),
     ],
 
     'view_manager' => [
@@ -105,6 +128,22 @@ return [
         ],
         'template_path_stack' => [
             __DIR__ . '/../view',
+        ],
+    ],
+
+    'console' => [
+        'router' => [
+            'routes' => [
+                'list-users' => [
+                    'options' => [
+                        'route'    => 'show <class_id>',
+                        'defaults' => [
+                            'controller' => Controller\IndexController::class,
+                            'action'     => 'show-users',
+                        ],
+                    ],
+                ],
+            ],
         ],
     ],
 ];
